@@ -18,12 +18,14 @@ namespace CarRentalManagement.Server.Data
 
         protected override void OnModelCreating (ModelBuilder builder)
         {
-            base.OnModelCreating(builder);
+            base.OnModelCreating (builder);
 
-            builder.ApplyConfiguration(new ColourSeedConfiguration());
-            builder.ApplyConfiguration(new MakeSeedConfiguration());
-            builder.ApplyConfiguration(new ModelSeedConfiguration());
-            builder.ApplyConfiguration(new RoleSeedConfiguration());
+            builder.ApplyConfiguration (new ColourSeedConfiguration ());
+            builder.ApplyConfiguration (new MakeSeedConfiguration ());
+            builder.ApplyConfiguration (new ModelSeedConfiguration ());
+            builder.ApplyConfiguration (new RoleSeedConfiguration ());
+            builder.ApplyConfiguration (new UserRoleSeedConfiguration ());
+            builder.ApplyConfiguration (new UserSeedConfiguration ());
         }
 
         public DbSet<Vehicle> Vehicles { get; set; }
