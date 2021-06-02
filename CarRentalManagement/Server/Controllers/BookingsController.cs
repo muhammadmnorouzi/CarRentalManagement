@@ -13,45 +13,45 @@ namespace CarRentalManagement.Server.Controllers
 {
     [Route ("[controller]")]
     [ApiController]
-    public class MakesController : ControllerBase
+    public class BookingsController : ControllerBase
     {
         private readonly IUnitOfWork unitOfWork;
 
-        public MakesController (IUnitOfWork unitOfWork)
+        public BookingsController (IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
         }
 
-        // GET: Makes
+        // GET: Bookings
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Make>>> GetMakes ( )
+        public async Task<ActionResult<IEnumerable<Booking>>> GetBookings ( )
         {
-            var Makes = await unitOfWork.Makes.GetAll ();
-            return Ok (Makes);
+            var Bookings = await unitOfWork.Bookings.GetAll ();
+            return Ok (Bookings);
         }
 
-        // GET: Makes/5
+        // GET: Bookings/5
         [HttpGet ("{id}")]
-        public async Task<ActionResult<Make>> GetMake (int id)
+        public async Task<ActionResult<Booking>> GetBooking (int id)
         {
-            var Make = await unitOfWork.Makes.Get (m => m.Id == id);
+            var Booking = await unitOfWork.Bookings.Get (m => m.Id == id);
 
-            if (Make is null) return NotFound ();
+            if (Booking is null) return NotFound ();
 
-            return Ok (Make);
+            return Ok (Booking);
         }
 
-        // PUT: Makes/5
+        // PUT: Bookings/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut ("{id}")]
-        public async Task<IActionResult> PutMake (int id , Make Make)
+        public async Task<IActionResult> PutBooking (int id , Booking Booking)
         {
-            if (id != Make.Id)
+            if (id != Booking.Id)
             {
                 return BadRequest ();
             }
 
-            unitOfWork.Makes.Update (Make);
+            unitOfWork.Bookings.Update (Booking);
 
             try
             {
@@ -59,7 +59,7 @@ namespace CarRentalManagement.Server.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (await MakeExists (id) is false)
+                if (await BookingExists (id) is false)
                 {
                     return NotFound ();
                 }
@@ -72,36 +72,36 @@ namespace CarRentalManagement.Server.Controllers
             return NoContent ();
         }
 
-        // POST: Makes
+        // POST: Bookings
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Make>> PostMake (Make Make)
+        public async Task<ActionResult<Booking>> PostBooking (Booking Booking)
         {
-            await unitOfWork.Makes.Insert (Make);
+            await unitOfWork.Bookings.Insert (Booking);
             await unitOfWork.Save (HttpContext);
 
-            return CreatedAtAction ("GetMake" , new { id = Make.Id } , Make);
+            return CreatedAtAction ("GetBooking" , new { id = Booking.Id } , Booking);
         }
 
-        // DELETE: Makes/5
+        // DELETE: Bookings/5
         [HttpDelete ("{id}")]
-        public async Task<IActionResult> DeleteMake (int id)
+        public async Task<IActionResult> DeleteBooking (int id)
         {
-            var Make = unitOfWork.Makes.Get (m => m.Id == id);
-            if (Make == null)
+            var Booking = unitOfWork.Bookings.Get (m => m.Id == id);
+            if (Booking == null)
             {
                 return NotFound ();
             }
-            await unitOfWork.Makes.Delete(id);
+            await unitOfWork.Bookings.Delete(id);
             await unitOfWork.Save(HttpContext);
 
             return NoContent ();
         }
 
-        private async Task<bool> MakeExists (int id)
+        private async Task<bool> BookingExists (int id)
         {
-            var Make = await unitOfWork.Makes.Get (m => m.Id == id);
-            return Make == null;
+            var Booking = await unitOfWork.Bookings.Get (m => m.Id == id);
+            return Booking == null;
         }
     }
 }

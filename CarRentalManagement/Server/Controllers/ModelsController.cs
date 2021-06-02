@@ -13,45 +13,45 @@ namespace CarRentalManagement.Server.Controllers
 {
     [Route ("[controller]")]
     [ApiController]
-    public class MakesController : ControllerBase
+    public class ModelsController : ControllerBase
     {
         private readonly IUnitOfWork unitOfWork;
 
-        public MakesController (IUnitOfWork unitOfWork)
+        public ModelsController (IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
         }
 
-        // GET: Makes
+        // GET: Models
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Make>>> GetMakes ( )
+        public async Task<ActionResult<IEnumerable<Model>>> GetModels ( )
         {
-            var Makes = await unitOfWork.Makes.GetAll ();
-            return Ok (Makes);
+            var Models = await unitOfWork.Models.GetAll ();
+            return Ok (Models);
         }
 
-        // GET: Makes/5
+        // GET: Models/5
         [HttpGet ("{id}")]
-        public async Task<ActionResult<Make>> GetMake (int id)
+        public async Task<ActionResult<Model>> GetModel (int id)
         {
-            var Make = await unitOfWork.Makes.Get (m => m.Id == id);
+            var Model = await unitOfWork.Models.Get (m => m.Id == id);
 
-            if (Make is null) return NotFound ();
+            if (Model is null) return NotFound ();
 
-            return Ok (Make);
+            return Ok (Model);
         }
 
-        // PUT: Makes/5
+        // PUT: Models/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut ("{id}")]
-        public async Task<IActionResult> PutMake (int id , Make Make)
+        public async Task<IActionResult> PutModel (int id , Model Model)
         {
-            if (id != Make.Id)
+            if (id != Model.Id)
             {
                 return BadRequest ();
             }
 
-            unitOfWork.Makes.Update (Make);
+            unitOfWork.Models.Update (Model);
 
             try
             {
@@ -59,7 +59,7 @@ namespace CarRentalManagement.Server.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (await MakeExists (id) is false)
+                if (await ModelExists (id) is false)
                 {
                     return NotFound ();
                 }
@@ -72,36 +72,36 @@ namespace CarRentalManagement.Server.Controllers
             return NoContent ();
         }
 
-        // POST: Makes
+        // POST: Models
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Make>> PostMake (Make Make)
+        public async Task<ActionResult<Model>> PostModel (Model Model)
         {
-            await unitOfWork.Makes.Insert (Make);
+            await unitOfWork.Models.Insert (Model);
             await unitOfWork.Save (HttpContext);
 
-            return CreatedAtAction ("GetMake" , new { id = Make.Id } , Make);
+            return CreatedAtAction ("GetModel" , new { id = Model.Id } , Model);
         }
 
-        // DELETE: Makes/5
+        // DELETE: Models/5
         [HttpDelete ("{id}")]
-        public async Task<IActionResult> DeleteMake (int id)
+        public async Task<IActionResult> DeleteModel (int id)
         {
-            var Make = unitOfWork.Makes.Get (m => m.Id == id);
-            if (Make == null)
+            var Model = unitOfWork.Models.Get (m => m.Id == id);
+            if (Model == null)
             {
                 return NotFound ();
             }
-            await unitOfWork.Makes.Delete(id);
-            await unitOfWork.Save(HttpContext);
+            await unitOfWork.Models.Delete (id);
+            await unitOfWork.Save (HttpContext);
 
             return NoContent ();
         }
 
-        private async Task<bool> MakeExists (int id)
+        private async Task<bool> ModelExists (int id)
         {
-            var Make = await unitOfWork.Makes.Get (m => m.Id == id);
-            return Make == null;
+            var Model = await unitOfWork.Models.Get (m => m.Id == id);
+            return Model == null;
         }
     }
 }

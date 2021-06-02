@@ -13,45 +13,45 @@ namespace CarRentalManagement.Server.Controllers
 {
     [Route ("[controller]")]
     [ApiController]
-    public class MakesController : ControllerBase
+    public class VehiclesController : ControllerBase
     {
         private readonly IUnitOfWork unitOfWork;
 
-        public MakesController (IUnitOfWork unitOfWork)
+        public VehiclesController (IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
         }
 
-        // GET: Makes
+        // GET: Vehicles
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Make>>> GetMakes ( )
+        public async Task<ActionResult<IEnumerable<Vehicle>>> GetVehicles ( )
         {
-            var Makes = await unitOfWork.Makes.GetAll ();
-            return Ok (Makes);
+            var Vehicles = await unitOfWork.Vehicles.GetAll ();
+            return Ok (Vehicles);
         }
 
-        // GET: Makes/5
+        // GET: Vehicles/5
         [HttpGet ("{id}")]
-        public async Task<ActionResult<Make>> GetMake (int id)
+        public async Task<ActionResult<Vehicle>> GetVehicle (int id)
         {
-            var Make = await unitOfWork.Makes.Get (m => m.Id == id);
+            var Vehicle = await unitOfWork.Vehicles.Get (m => m.Id == id);
 
-            if (Make is null) return NotFound ();
+            if (Vehicle is null) return NotFound ();
 
-            return Ok (Make);
+            return Ok (Vehicle);
         }
 
-        // PUT: Makes/5
+        // PUT: Vehicles/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut ("{id}")]
-        public async Task<IActionResult> PutMake (int id , Make Make)
+        public async Task<IActionResult> PutVehicle (int id , Vehicle Vehicle)
         {
-            if (id != Make.Id)
+            if (id != Vehicle.Id)
             {
                 return BadRequest ();
             }
 
-            unitOfWork.Makes.Update (Make);
+            unitOfWork.Vehicles.Update (Vehicle);
 
             try
             {
@@ -59,7 +59,7 @@ namespace CarRentalManagement.Server.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (await MakeExists (id) is false)
+                if (await VehicleExists (id) is false)
                 {
                     return NotFound ();
                 }
@@ -72,36 +72,36 @@ namespace CarRentalManagement.Server.Controllers
             return NoContent ();
         }
 
-        // POST: Makes
+        // POST: Vehicles
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Make>> PostMake (Make Make)
+        public async Task<ActionResult<Vehicle>> PostVehicle (Vehicle Vehicle)
         {
-            await unitOfWork.Makes.Insert (Make);
+            await unitOfWork.Vehicles.Insert (Vehicle);
             await unitOfWork.Save (HttpContext);
 
-            return CreatedAtAction ("GetMake" , new { id = Make.Id } , Make);
+            return CreatedAtAction ("GetVehicle" , new { id = Vehicle.Id } , Vehicle);
         }
 
-        // DELETE: Makes/5
+        // DELETE: Vehicles/5
         [HttpDelete ("{id}")]
-        public async Task<IActionResult> DeleteMake (int id)
+        public async Task<IActionResult> DeleteVehicle (int id)
         {
-            var Make = unitOfWork.Makes.Get (m => m.Id == id);
-            if (Make == null)
+            var Vehicle = unitOfWork.Vehicles.Get (m => m.Id == id);
+            if (Vehicle == null)
             {
                 return NotFound ();
             }
-            await unitOfWork.Makes.Delete(id);
+            await unitOfWork.Vehicles.Delete(id);
             await unitOfWork.Save(HttpContext);
 
             return NoContent ();
         }
 
-        private async Task<bool> MakeExists (int id)
+        private async Task<bool> VehicleExists (int id)
         {
-            var Make = await unitOfWork.Makes.Get (m => m.Id == id);
-            return Make == null;
+            var Vehicle = await unitOfWork.Vehicles.Get (m => m.Id == id);
+            return Vehicle == null;
         }
     }
 }

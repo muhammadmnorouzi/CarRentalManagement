@@ -13,45 +13,45 @@ namespace CarRentalManagement.Server.Controllers
 {
     [Route ("[controller]")]
     [ApiController]
-    public class MakesController : ControllerBase
+    public class ColoursController : ControllerBase
     {
         private readonly IUnitOfWork unitOfWork;
 
-        public MakesController (IUnitOfWork unitOfWork)
+        public ColoursController (IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
         }
 
-        // GET: Makes
+        // GET: Colours
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Make>>> GetMakes ( )
+        public async Task<ActionResult<IEnumerable<Colour>>> GetColours ( )
         {
-            var Makes = await unitOfWork.Makes.GetAll ();
-            return Ok (Makes);
+            var Colours = await unitOfWork.Colours.GetAll ();
+            return Ok (Colours);
         }
 
-        // GET: Makes/5
+        // GET: Colours/5
         [HttpGet ("{id}")]
-        public async Task<ActionResult<Make>> GetMake (int id)
+        public async Task<ActionResult<Colour>> GetColour (int id)
         {
-            var Make = await unitOfWork.Makes.Get (m => m.Id == id);
+            var Colour = await unitOfWork.Colours.Get (m => m.Id == id);
 
-            if (Make is null) return NotFound ();
+            if (Colour is null) return NotFound ();
 
-            return Ok (Make);
+            return Ok (Colour);
         }
 
-        // PUT: Makes/5
+        // PUT: Colours/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut ("{id}")]
-        public async Task<IActionResult> PutMake (int id , Make Make)
+        public async Task<IActionResult> PutColour (int id , Colour Colour)
         {
-            if (id != Make.Id)
+            if (id != Colour.Id)
             {
                 return BadRequest ();
             }
 
-            unitOfWork.Makes.Update (Make);
+            unitOfWork.Colours.Update (Colour);
 
             try
             {
@@ -59,7 +59,7 @@ namespace CarRentalManagement.Server.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (await MakeExists (id) is false)
+                if (await ColourExists (id) is false)
                 {
                     return NotFound ();
                 }
@@ -72,36 +72,36 @@ namespace CarRentalManagement.Server.Controllers
             return NoContent ();
         }
 
-        // POST: Makes
+        // POST: Colours
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Make>> PostMake (Make Make)
+        public async Task<ActionResult<Colour>> PostColour (Colour Colour)
         {
-            await unitOfWork.Makes.Insert (Make);
+            await unitOfWork.Colours.Insert (Colour);
             await unitOfWork.Save (HttpContext);
 
-            return CreatedAtAction ("GetMake" , new { id = Make.Id } , Make);
+            return CreatedAtAction ("GetColour" , new { id = Colour.Id } , Colour);
         }
 
-        // DELETE: Makes/5
+        // DELETE: Colours/5
         [HttpDelete ("{id}")]
-        public async Task<IActionResult> DeleteMake (int id)
+        public async Task<IActionResult> DeleteColour (int id)
         {
-            var Make = unitOfWork.Makes.Get (m => m.Id == id);
-            if (Make == null)
+            var Colour = unitOfWork.Colours.Get (m => m.Id == id);
+            if (Colour == null)
             {
                 return NotFound ();
             }
-            await unitOfWork.Makes.Delete(id);
+            await unitOfWork.Colours.Delete(id);
             await unitOfWork.Save(HttpContext);
 
             return NoContent ();
         }
 
-        private async Task<bool> MakeExists (int id)
+        private async Task<bool> ColourExists (int id)
         {
-            var Make = await unitOfWork.Makes.Get (m => m.Id == id);
-            return Make == null;
+            var Colour = await unitOfWork.Colours.Get (m => m.Id == id);
+            return Colour == null;
         }
     }
 }
