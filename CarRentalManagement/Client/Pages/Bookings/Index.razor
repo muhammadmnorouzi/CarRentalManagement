@@ -1,0 +1,47 @@
+﻿@page "/bookings/"
+
+
+<h3 class="card-title">Booking</h3>
+<hr />
+<br />
+
+@if (Bookings is null || Bookings.Count == 0)
+{
+    <div class="alert alert-info">Loading Bookings ....</div>
+}
+else
+{
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>Customer Tax Id</th>
+                <th>Date</th>
+                <th>Duration</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var booking in Bookings)
+            {
+            <tr>
+                <th>@booking.Customer.TaxId</th>
+                <th>@booking.DateCreated.Date.ToString("dd MMMM yyyy")</th>
+                <th>
+                    @((booking.DateIn - booking.DateOut).TotalDays.ToString())
+                </th>
+                <th>
+                    <a href="/bookings/view/@booking.Id" class="btn btn-primary">
+                        <span class="oi oi-book"></span>
+                    </a>
+                    <a href="/bookings/edit/@booking.Id" class="btn btn-warning">
+                        <span class="oi oi-pencil"></span>
+                    </a>
+                    <button class="btn btn-danger" @onclick="@(async ()=> await Delete(booking.Id))">
+                        <span class="oi oi-book"></span>
+                    </button>
+                </th>
+            </tr>
+            }
+        </tbody>
+    </table>
+}

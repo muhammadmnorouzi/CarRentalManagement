@@ -1,0 +1,41 @@
+﻿@page "/makes/"
+
+
+<h3 class="card-title">Car Makes</h3>
+<hr />
+<br />
+
+@if (Makes is null)
+{
+    <div class="alert alert-info">Loading Makes ....</div>
+}
+else
+{
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var make in Makes)
+            {
+                <tr>
+                    <th>@make.Name</th>
+                    <th>
+                        <a href="/makes/view/@make.Id" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/makes/edit/@make.Id" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(async ()=> await Delete(make.Id))">
+                            <span class="oi oi-book"></span>
+                        </button>
+                    </th>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

@@ -11,7 +11,7 @@ using CarRentalManagement.Server.IRepository;
 
 namespace CarRentalManagement.Server.Controllers
 {
-    [Route ("[controller]")]
+    [Route ("api/[controller]")]
     [ApiController]
     public class ModelsController : ControllerBase
     {
@@ -75,7 +75,7 @@ namespace CarRentalManagement.Server.Controllers
         // POST: Models
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Model>> PostModel (Model Model)
+        public async Task<ActionResult<Customer>> PostModel (Model Model)
         {
             await unitOfWork.Models.Insert (Model);
             await unitOfWork.Save (HttpContext);
