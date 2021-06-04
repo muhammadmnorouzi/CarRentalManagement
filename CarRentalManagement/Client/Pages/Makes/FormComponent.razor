@@ -1,0 +1,22 @@
+﻿@*
+    This form can be used for creating and editing goals.
+*@
+
+<EditForm Model="Make" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label>Make Name: </label>
+        <div>
+            <InputText @bind-Value="@Make.Name" class="form-control" />
+            <ValidationMessage For="@(() => Make.Name)" />
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-success btn-block">
+        @ButtonText
+    </button>
+
+</EditForm>
+

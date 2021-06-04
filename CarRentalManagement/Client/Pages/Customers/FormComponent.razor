@@ -1,0 +1,43 @@
+﻿@*
+    This form can be used for creating and editing goals.
+*@
+
+<EditForm Model="Customer" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label>Tax Identification Number: </label>
+        <div>
+            <InputText @bind-Value="@Customer.TaxId" class="form-control" />
+            <ValidationMessage For="@(() => Customer.TaxId)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Email Address: </label>
+        <div>
+            <InputText @bind-Value="@Customer.EmailAddress" class="form-control" />
+            <ValidationMessage For="@(() => Customer.EmailAddress)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Contact Number: </label>
+        <div>
+            <InputText @bind-Value="@Customer.ContactNumber" class="form-control" />
+            <ValidationMessage For="@(() => Customer.ContactNumber)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Address: </label>
+        <div>
+            <InputTextArea @bind-Value="@Customer.Address" class="form-control" />
+            <ValidationMessage For="@(() => Customer.Address)" />
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-success btn-block">
+        @ButtonText
+    </button>
+
+</EditForm>
+

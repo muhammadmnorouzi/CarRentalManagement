@@ -12,10 +12,8 @@ namespace CarRentalManagement.Client.Pages.Makes
     [Authorize]
     public partial class Create
     {
-        [Inject]
-        HttpClient client { get; set; }
-        [Inject] 
-        NavigationManager navigationManager { get; set; }
+        [Inject] HttpClient client { get; set; }
+        [Inject] NavigationManager navigationManager { get; set; }
 
         Make make= new ();
 

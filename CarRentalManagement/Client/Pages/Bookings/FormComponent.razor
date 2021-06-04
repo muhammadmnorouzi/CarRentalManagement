@@ -1,0 +1,50 @@
+﻿@*
+    This form can be used for creating and editing goals.
+*@
+
+<EditForm Model="Booking" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label>Vehicle: </label>
+        <div>
+            <select @bind="Booking.VehicleId" class="form-control">
+                <option value="">-- Select Vehicle --</option>
+                @if (Vehicles is not null)
+                {
+                    foreach (var vehicle in Vehicles)
+                    {
+                        <option value="@vehicle.Id">@vehicle.Make?.Name @vehicle.Model?.Name || @vehicle.LicensePlateNumber</option>
+                    }
+                }
+            </select>
+            <ValidationMessage For="@(() => Booking.VehicleId)" />
+        </div>
+        <div>
+            <label>Customer: </label>
+            <select @bind="Booking.CustomerId" class="form-control">
+                <option value="">-- Select Customer --</option>
+                @if (Customers is not null)
+                {
+                    foreach (var customer in Customers)
+                    {
+                        <option value="@customer.Id">@customer.TaxId || @customer.EmailAddress</option>
+                    }
+                }
+            </select>
+            <ValidationMessage For="@(() => Booking.CustomerId)" />
+        </div>
+        <div>
+            <label>Date Out: </label>
+            <InputDate @bind-Value="Booking.DateOut" class="form-control" />
+            <ValidationMessage For="@(() => Booking.CustomerId)" />
+        </div>
+    </div>
+
+
+    <button type="submit" class="btn btn-success btn-block">
+        @ButtonText
+    </button>
+</EditForm>
+

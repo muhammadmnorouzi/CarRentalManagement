@@ -4,41 +4,4 @@
 <hr />
 <br />
 
-<EditForm Model="customer" OnValidSubmit="CreateCustomer">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
-
-    <div class="form-group">
-        <label>Tax Identification Number: </label>
-        <div>
-            <InputText @bind-Value="@customer.TaxId" class="form-control"/>
-            <ValidationMessage For="@(() => customer.TaxId)" />
-        </div>
-    </div>
-    <div class="form-group">
-        <label>Email Address: </label>
-        <div>
-            <InputText @bind-Value="@customer.EmailAddress" class="form-control"/>
-            <ValidationMessage For="@(() => customer.EmailAddress)" />
-        </div>
-    </div>
-    <div class="form-group">
-        <label>Contact Number: </label>
-        <div>
-            <InputText @bind-Value="@customer.ContactNumber" class="form-control"/>
-            <ValidationMessage For="@(() => customer.ContactNumber)" />
-        </div>
-    </div>
-    <div class="form-group">
-        <label>Address: </label>
-        <div>
-            <InputTextArea @bind-Value="@customer.Address" class="form-control"/>
-            <ValidationMessage For="@(() => customer.Address)" />
-        </div>
-    </div>
-
-    <button type="submit" class="btn btn-success btn-block">
-        Create Make
-    </button>
-
-</EditForm>
+<FormComponent Customer="customer" ButtonText="Create New" OnValidSubmit="CreateCustomer" />

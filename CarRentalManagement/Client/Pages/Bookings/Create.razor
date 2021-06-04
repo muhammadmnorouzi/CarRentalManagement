@@ -4,49 +4,5 @@
 <hr />
 <br />
 
-<EditForm Model="booking" OnValidSubmit="CreateBooking">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
-
-    <div class="form-group">
-        <label>Vehicle: </label>
-        <div>
-            <select @bind="booking.VehicleId" class="form-control">
-                <option value="">-- Select Vehicle --</option>
-                @if (Vehicles is not null)
-                {
-                    foreach (var vehicle in Vehicles)
-                    {
-                        <option value="@vehicle.Id">@vehicle.Make?.Name @vehicle.Model?.Name || @vehicle.LicensePlateNumber</option>
-                    }
-                }
-            </select>
-            <ValidationMessage For="@(() => booking.VehicleId)" />
-        </div>
-        <div>
-            <label>Customer: </label>
-            <select @bind="booking.CustomerId" class="form-control">
-                <option value="">-- Select Customer --</option>
-                @if (Customers is not null)
-                {
-                    foreach (var customer in Customers)
-                    {
-                        <option value="@customer.Id">@customer.TaxId || @customer.EmailAddress</option>
-                    }
-                }
-            </select>
-            <ValidationMessage For="@(() => booking.CustomerId)" />
-        </div>
-        <div>
-            <label>Date Out: </label>
-            <InputDate @bind-Value="booking.DateOut" class="form-control" />
-            <ValidationMessage For="@(() => booking.CustomerId)" />
-        </div>
-    </div>
-    
-
-    <button type="submit" class="btn btn-success btn-block">
-        Create Booking
-    </button>
-</EditForm>
+<FormComponent Booking="booking" ButtonText="Create New" OnValidSubmit="CreateBooking" />
 
