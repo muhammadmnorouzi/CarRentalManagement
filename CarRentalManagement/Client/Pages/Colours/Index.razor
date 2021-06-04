@@ -5,37 +5,46 @@
 <hr />
 <br />
 
+<a href="/colours/create" class="btn btn-secondary">
+    <i class="oi oi-plus"></i>
+    Create New Colour
+</a>
+<br />
+<br />
+
 @if (Colours is null)
 {
-<div class="alert alert-info">Loading Colours ....</div>
+    <div class="alert alert-info">Loading Colours ....</div>
 }
 else
 {
-    <table class="table table-responsive">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var colour in Colours)
-            {
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
                 <tr>
-                    <th>@colour.Name</th>
-                    <th>
-                        <a href="/colours/view/@colour.Id" class="btn btn-primary">
-                            <span class="oi oi-book"></span>
-                        </a>
-                        <a href="/colours/edit/@colour.Id" class="btn btn-warning">
-                            <span class="oi oi-pencil"></span>
-                        </a>
-                        <button class="btn btn-danger" @onclick="@(async ()=> await Delete(colour.Id))">
-                            <span class="oi oi-book"></span>
-                        </button>
-                    </th>
+                    <th>Name</th>
+                    <th>Actions</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var colour in Colours)
+                {
+                    <tr>
+                        <th>@colour.Name</th>
+                        <th>
+                            <a href="/colours/view/@colour.Id" class="btn btn-primary">
+                                <span class="oi oi-book"></span>
+                            </a>
+                            <a href="/colours/edit/@colour.Id" class="btn btn-warning">
+                                <span class="oi oi-pencil"></span>
+                            </a>
+                            <button class="btn btn-danger" @onclick="@(async ()=> await Delete(colour.Id))">
+                                <span class="oi oi-book"></span>
+                            </button>
+                        </th>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 }

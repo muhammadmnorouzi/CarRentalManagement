@@ -1,0 +1,23 @@
+﻿@page "/makes/create"
+
+<h3 class="card-title">Create New Make</h3>
+<hr />
+<br />
+
+<EditForm Model="make" OnValidSubmit="CreateMake">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label>Make Name: </label>
+        <div>
+            <InputText @bind-Value="@make.Name" class="form-control"/>
+            <ValidationMessage For="@(() => make.Name)" />
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-success btn-block">
+        Create Make
+    </button>
+
+</EditForm>

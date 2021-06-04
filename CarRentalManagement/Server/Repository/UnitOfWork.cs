@@ -51,7 +51,7 @@ namespace CarRentalManagement.Server.Repository
 
         public async Task Save (HttpContext httpContext)
         {
-            var userName = httpContext.User.Identity.Name ?? "Anonymous User";
+            var userName = httpContext.User.Identity.Name;
 
             var entries = context.ChangeTracker.Entries ()
                     .Where (e => e.State is EntityState.Added or EntityState.Modified);

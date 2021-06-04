@@ -5,13 +5,21 @@
 <hr />
 <br />
 
+<a href="/customers/create" class="btn btn-secondary">
+    <i class="oi oi-plus"></i>
+    Create New Customer
+</a>
+<br />
+<br />
+
 @if (Customers is null)
 {
     <div class="alert alert-info">Loading Customers ....</div>
 }
 else
 {
-    <table class="table table-responsive">
+<div class="table-responsive">
+    <table class="table">
         <thead>
             <tr>
                 <th>Tax Id</th>
@@ -22,24 +30,25 @@ else
         </thead>
         <tbody>
             @foreach (var customer in Customers)
-            {
-            <tr>
-                <th>@customer.TaxId</th>
-                <th>@customer.ContactNumber</th>
-                <th>@customer.EmailAddress</th>
-                <th>
-                    <a href="/customers/view/@customer.Id" class="btn btn-primary">
-                        <span class="oi oi-book"></span>
-                    </a>
-                    <a href="/customers/edit/@customer.Id" class="btn btn-warning">
-                        <span class="oi oi-pencil"></span>
-                    </a>
-                    <button class="btn btn-danger" @onclick="@(async ()=> await Delete(customer.Id))">
-                        <span class="oi oi-book"></span>
-                    </button>
-                </th>
-            </tr>
-            }
+                            {
+                                <tr>
+                                    <th>@customer.TaxId</th>
+                                    <th>@customer.ContactNumber</th>
+                                    <th>@customer.EmailAddress</th>
+                                    <th>
+                                        <a href="/customers/view/@customer.Id" class="btn btn-primary">
+                                            <span class="oi oi-book"></span>
+                                        </a>
+                                        <a href="/customers/edit/@customer.Id" class="btn btn-warning">
+                                            <span class="oi oi-pencil"></span>
+                                        </a>
+                                        <button class="btn btn-danger" @onclick="@(async ()=> await Delete(customer.Id))">
+                                            <span class="oi oi-book"></span>
+                                        </button>
+                                    </th>
+                                </tr>
+                            }
         </tbody>
     </table>
+</div>
 }

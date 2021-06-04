@@ -1,0 +1,91 @@
+﻿@page "/vehicles/create"
+
+<h3 class="card-title">Create New Vehicle</h3>
+<hr />
+<br />
+
+<EditForm Model="vehicle" OnValidSubmit="CreateVehicle">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label>Makes: </label>
+        <div>
+            <select @bind="vehicle.MakeId" class="form-control">
+                <option value="">-- Select Make --</option>
+                @if (Makes is not null)
+                {
+                    foreach (var make in Makes)
+                    {
+                        <option value="@make.Id">@make.Name</option>
+                    }
+                }
+            </select>
+            <ValidationMessage For="@(() => vehicle.ModelId)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Models: </label>
+        <div>
+            <InputSelect @bind-Value="vehicle.ModelId" class="form-control">
+                <option value="">-- Select Model --</option>
+                @if (Models is not null)
+                {
+                    foreach (var model in Models)
+                    {
+                        <option value="@model.Id">@model.Name</option>
+                    }
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => vehicle.ModelId)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Colours: </label>
+        <div>
+            <InputSelect @bind-Value="vehicle.ColourId" class="form-control">
+                <option value="">-- Select Colour --</option>
+                @if (Colours is not null)
+                {
+                    foreach (var colour in Colours)
+                    {
+                        <option value="@colour.Id">@colour.Name</option>
+                    }
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => vehicle.ColourId)" class="form-control"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Year: </label>
+        <div>
+            <InputNumber @bind-Value="@vehicle.Year" class="form-control"/>
+            <ValidationMessage For="@(() => vehicle.Year)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>License Plate Number: </label>
+        <div>
+            <InputText @bind-Value="@vehicle.LicensePlateNumber" class="form-control"/>
+            <ValidationMessage For="@(() => vehicle.LicensePlateNumber)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Vehicle Identification Number: </label>
+        <div>
+            <InputText @bind-Value="@vehicle.Vin" class="form-control"/>
+            <ValidationMessage For="@(() => vehicle.Vin)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Daily Rate: </label>
+        <div>
+            <InputNumber @bind-Value="@vehicle.RentalRate" class="form-control"/>
+            <ValidationMessage For="@(() => vehicle.RentalRate)" />
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success btn-block">
+        Create Vehicle
+    </button>
+</EditForm>
+

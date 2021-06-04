@@ -1,47 +1,55 @@
 ﻿@page "/vehicles/"
 
-
-<h3 class="card-title">Car Vehicles</h3>
+<h3 class="card-title">Vehicles</h3>
 <hr />
+<br />
+
+<a href="/vehicles/create" class="btn btn-secondary">
+    <i class="oi oi-plus"></i>
+    Create New Vehicle
+</a>
+<br />
 <br />
 
 @if (Vehicles is null)
 {
-<div class="alert alert-info">Loading Vehicles ....</div>
+    <div class="alert alert-info">Loading Vehicles ....</div>
 }
 else
 {
-    <table class="table table-responsive">
-        <thead>
-            <tr>
-                <th>Make</th>
-                <th>Model</th>
-                <th>Year</th>
-                <th>Daily Rate</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var vehicle in Vehicles)
-            {
-            <tr>
-                <th>@vehicle.Make.Name</th>
-                <th>@vehicle.Model.Name</th>
-                <th>@vehicle.Year</th>
-                <th>@vehicle.RentalRate</th>
-                <th>
-                    <a href="/vehicles/view/@vehicle.Id" class="btn btn-primary">
-                        <span class="oi oi-book"></span>
-                    </a>
-                    <a href="/vehicles/edit/@vehicle.Id" class="btn btn-warning">
-                        <span class="oi oi-pencil"></span>
-                    </a>
-                    <button class="btn btn-danger" @onclick="@(async ()=>await Delete(vehicle.Id))">
-                        <span class="oi oi-book"></span>
-                    </button>
-                </th>
-            </tr>
-            }
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Make</th>
+                    <th>Model</th>
+                    <th>Year</th>
+                    <th>Daily Rate</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var vehicle in Vehicles)
+                {
+                    <tr>
+                        <th>@vehicle.Make?.Name</th>
+                        <th>@vehicle.Model?.Name</th>
+                        <th>@vehicle.Year</th>
+                        <th>@vehicle.RentalRate</th>
+                        <th>
+                            <a href="/vehicles/view/@vehicle.Id" class="btn btn-primary">
+                                <span class="oi oi-book"></span>
+                            </a>
+                            <a href="/vehicles/edit/@vehicle.Id" class="btn btn-warning">
+                                <span class="oi oi-pencil"></span>
+                            </a>
+                            <button class="btn btn-danger" @onclick="@(async ()=>await Delete(vehicle.Id))">
+                                <span class="oi oi-book"></span>
+                            </button>
+                        </th>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 }

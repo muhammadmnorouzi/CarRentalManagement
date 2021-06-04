@@ -40,7 +40,7 @@ namespace CarRentalManagement.Server.Repository
             {
                 foreach (var prop in includes)
                 {
-                    query.Include (prop);
+                    query = query.Include (prop);
                 }
             }
 
@@ -63,7 +63,7 @@ namespace CarRentalManagement.Server.Repository
             {
                 foreach(var prop in includes)
                 {
-                    query.Include(prop);
+                    query = query.Include(prop);
                 }
             }
 

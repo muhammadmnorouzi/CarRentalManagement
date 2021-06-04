@@ -45,7 +45,8 @@ namespace CarRentalManagement.Server
 
             services.AddTransient<IUnitOfWork , UnitOfWork>();
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddRazorPages();
         }
 

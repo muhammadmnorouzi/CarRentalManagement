@@ -11,9 +11,7 @@ using CarRentalManagement.Server.IRepository;
 
 namespace CarRentalManagement.Server.Controllers
 {
-    [Route ("api/[controller]")]
-    [ApiController]
-    public class ColoursController : ControllerBase
+    public class ColoursController : BaseApiController
     {
         private readonly IUnitOfWork unitOfWork;
 

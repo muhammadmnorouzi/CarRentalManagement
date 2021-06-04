@@ -1,0 +1,23 @@
+﻿@page "/models/create"
+
+<h3 class="card-title">Create New Model</h3>
+<hr />
+<br />
+
+<EditForm Model="model" OnValidSubmit="CreateModel">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label>Model Name: </label>
+        <div>
+            <InputText @bind-Value="@model.Name" class="form-control"/>
+            <ValidationMessage For="@(() => model.Name)" class="form-control"/>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-success btn-block">
+        Create Model
+    </button>
+
+</EditForm>

@@ -11,9 +11,7 @@ using CarRentalManagement.Server.IRepository;
 
 namespace CarRentalManagement.Server.Controllers
 {
-    [Route ("api/[controller]")]
-    [ApiController]
-    public class VehiclesController : ControllerBase
+    public class VehiclesController : BaseApiController
     {
         private readonly IUnitOfWork unitOfWork;
 

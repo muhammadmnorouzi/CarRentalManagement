@@ -5,37 +5,46 @@
 <hr />
 <br />
 
+<a href="/makes/create" class="btn btn-secondary">
+    <i class="oi oi-plus"></i>
+    Create New Make
+</a>
+<br />
+<br />
+
 @if (Makes is null)
 {
     <div class="alert alert-info">Loading Makes ....</div>
 }
 else
 {
-    <table class="table table-responsive">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var make in Makes)
-            {
+    <div class="table-responsive">
+        <table class="table ">
+            <thead>
                 <tr>
-                    <th>@make.Name</th>
-                    <th>
-                        <a href="/makes/view/@make.Id" class="btn btn-primary">
-                            <span class="oi oi-book"></span>
-                        </a>
-                        <a href="/makes/edit/@make.Id" class="btn btn-warning">
-                            <span class="oi oi-pencil"></span>
-                        </a>
-                        <button class="btn btn-danger" @onclick="@(async ()=> await Delete(make.Id))">
-                            <span class="oi oi-book"></span>
-                        </button>
-                    </th>
+                    <th>Name</th>
+                    <th>Actions</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var make in Makes)
+                {
+                    <tr>
+                        <th>@make.Name</th>
+                        <th>
+                            <a href="/makes/view/@make.Id" class="btn btn-primary">
+                                <span class="oi oi-book"></span>
+                            </a>
+                            <a href="/makes/edit/@make.Id" class="btn btn-warning">
+                                <span class="oi oi-pencil"></span>
+                            </a>
+                            <button class="btn btn-danger" @onclick="@(async ()=> await Delete(make.Id))">
+                                <span class="oi oi-book"></span>
+                            </button>
+                        </th>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 }
