@@ -15,14 +15,14 @@ namespace CarRentalManagement.Client.Pages.Vehicles
         [Inject] NavigationManager navigationManager { get; set; }
 
         [Parameter] public int id { get; set; }
-        public Vehicle vehicle{ get; set; } = new ();
+        public Vehicle vehicle { get; set; } = new ();
 
         protected override async Task OnParametersSetAsync ( )
-{
-            vehicle =  await client.GetFromJsonAsync<Vehicle> ($"{Endpoints.VehiclesEndpoint}/{id}");
+        {
+            vehicle = await client.GetFromJsonAsync<Vehicle> ($"{Endpoints.VehiclesEndpoint}/{id}");
         }
 
-        private async Task EditVehicle( )
+        private async Task EditVehicle ( )
         {
             await client.PutAsJsonAsync ($"{Endpoints.VehiclesEndpoint}/{id}" , vehicle);
             navigationManager.NavigateTo ("/vehicles/");

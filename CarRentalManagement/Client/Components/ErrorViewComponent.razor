@@ -1,0 +1,10 @@
+﻿
+<h3>@Message</h3>
+
+<ChangeUrl ButtonText="@ButtonText" Target="@Target" />
+
+@code {
+    [Parameter] public string Message { get; set; }
+    [Parameter] public string Target { get; set; } = "";
+    [Parameter] public string ButtonText { get; set; } = ButtonTexts.BackToErrorTest;
+}

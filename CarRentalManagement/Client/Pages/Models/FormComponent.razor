@@ -6,17 +6,23 @@
     <DataAnnotationsValidator />
     <ValidationSummary />
 
-    <div class="form-group">
-        <label>Model Name: </label>
-        <div>
-            <InputText @bind-Value="@Model.Name" class="form-control" />
-            <ValidationMessage For="@(() => Model.Name)" />
+    <fieldset disabled="@Disabled">
+        <div class="form-group">
+            <label>Model Name: </label>
+            <div>
+                <InputText @bind-Value="@Model.Name" class="form-control" />
+                <ValidationMessage For="@(() => Model.Name)" />
+            </div>
         </div>
-    </div>
+    </fieldset>
 
-    <button type="submit" class="btn btn-success btn-block">
-        @ButtonText
-    </button>
 
+    @if (!Disabled)
+    {
+        <button type="submit" class="btn btn-success btn-block">
+            @ButtonText
+        </button>
+    }
+    <ChangeUrl Target="models" />
 </EditForm>
 

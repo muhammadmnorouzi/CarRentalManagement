@@ -12,6 +12,7 @@ namespace CarRentalManagement.Client.Pages.Models
         [Parameter] public Model Model{ get; set; }
         [Parameter] public string ButtonText { get; set; }
         [Parameter] public EventCallback OnValidSubmit { get; set; }
+        [Parameter] public bool Disabled { get; set; } = false;
 
         // TODO : dynamic styling by class attribute
         //[Parameter] public string @class { get; set; } = ;

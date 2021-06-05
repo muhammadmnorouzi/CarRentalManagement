@@ -6,17 +6,22 @@
     <DataAnnotationsValidator />
     <ValidationSummary />
 
-    <div class="form-group">
-        <label>Colour Name: </label>
-        <div>
-            <InputText @bind-Value="@Colour.Name" class="form-control" />
-            <ValidationMessage For="@(() => Colour.Name)" />
+    <fieldset disabled="@Disabled">
+        <div class="form-group">
+            <label>Colour Name: </label>
+            <div>
+                <InputText @bind-Value="@Colour.Name" class="form-control" />
+                <ValidationMessage For="@(() => Colour.Name)" />
+            </div>
         </div>
-    </div>
+    </fieldset>
 
-    <button type="submit" class="btn btn-success btn-block">
-        @ButtonText
-    </button>
-
+    @if (!Disabled)
+    {
+        <button type="submit" class="btn btn-success btn-block">
+            @ButtonText
+        </button>
+    }
+    <ChangeUrl Target="colours" />
 </EditForm>
 

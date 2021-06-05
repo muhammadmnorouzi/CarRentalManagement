@@ -1,9 +1,6 @@
 ﻿@page "/customers/"
 
-
-<h3 class="card-title">Customers</h3>
-<hr />
-<br />
+<HeadingComponent Text="Customers" />
 
 <a href="/customers/create" class="btn btn-secondary">
     <i class="oi oi-plus"></i>
@@ -18,37 +15,37 @@
 }
 else
 {
-<div class="table-responsive">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Tax Id</th>
-                <th>Contact Number</th>
-                <th>Email Address</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var customer in Customers)
-                            {
-                                <tr>
-                                    <th>@customer.TaxId</th>
-                                    <th>@customer.ContactNumber</th>
-                                    <th>@customer.EmailAddress</th>
-                                    <th>
-                                        <a href="/customers/view/@customer.Id" class="btn btn-primary">
-                                            <span class="oi oi-book"></span>
-                                        </a>
-                                        <a href="/customers/edit/@customer.Id" class="btn btn-warning">
-                                            <span class="oi oi-pencil"></span>
-                                        </a>
-                                        <button class="btn btn-danger" @onclick="@(async ()=> await Delete(customer.Id))">
-                                            <span class="oi oi-book"></span>
-                                        </button>
-                                    </th>
-                                </tr>
-                            }
-        </tbody>
-    </table>
-</div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Full Name</th>
+                    <th>Contact Number</th>
+                    <th>Email Address</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var customer in Customers)
+                {
+                    <tr>
+                        <th>@customer.FirstName @customer.LastName</th>
+                        <th>@customer.ContactNumber</th>
+                        <th>@customer.EmailAddress</th>
+                        <th>
+                            <a href="/customers/view/@customer.Id" class="btn btn-primary">
+                                <span class="oi oi-book"></span>
+                            </a>
+                            <a href="/customers/edit/@customer.Id" class="btn btn-warning">
+                                <span class="oi oi-pencil"></span>
+                            </a>
+                            <button class="btn btn-danger" @onclick="@(async ()=> await Delete(customer.Id))">
+                                <span class="oi oi-book"></span>
+                            </button>
+                        </th>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 }

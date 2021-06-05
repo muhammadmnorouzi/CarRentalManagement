@@ -15,5 +15,11 @@ namespace CarRentalManagement.Client.Static
         public static string BookingsEndpoint = $"{Prefix}/bookings";
         public static string CustomersEndpoint = $"{Prefix}/customers";
         public static string ColoursEndpoint = $"{Prefix}/colours";
+        
+        //ErrorMaker endpoints
+        public static string ErrorBadRequest = $"{Prefix}/ErrorMaker/bad-request";
+        public static string ErrorNotFound = $"{Prefix}/ErrorMaker/not-found";
+        public static string ErrorUnauthorized= $"{Prefix}/ErrorMaker/UnAuthorized";
+        public static string ErrorInternalServerError = $"{Prefix}/ErrorMaker/internal-server-error";
     }
 }

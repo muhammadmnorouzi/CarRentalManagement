@@ -1,0 +1,21 @@
+﻿@page "/test-error"
+@inject HttpClient client
+
+<h3>Test Error</h3>
+<button class="btn btn-danger btn-block" @onclick="@(async () => await GetBadRequest())">Bad Request</button>
+<button class="btn btn-danger btn-block" @onclick="@(async () => await GetNotFound())">Not Found</button>
+<button class="btn btn-danger btn-block" @onclick="@(async () => await GetForbidden())">Forbidden</button>
+<button class="btn btn-danger btn-block" @onclick="@(async () => await GetServerError())">Server Error</button>
+<button class="btn btn-danger btn-block" @onclick="@(async () => await GetUnAuthorized())">UnAuthorized Error</button>
+<button class="btn btn-danger btn-block" @onclick="@(async () => await GetUnknownError())">UnKnown Error</button>
+
+<ChangeUrl ButtonText="@ButtonTexts.BackToHome" Target="" />
+
+@code {
+    async Task GetBadRequest ( ) => await client.GetAsync (Endpoints.ErrorBadRequest);
+    async Task GetNotFound ( ) => await client.GetAsync (Endpoints.ErrorNotFound);
+    async Task GetServerError ( ) => await client.GetAsync (Endpoints.ErrorInternalServerError);
+    async Task GetUnAuthorized ( ) => await client.GetAsync (Endpoints.ErrorUnauthorized);
+    async Task GetForbidden ( ) { Console.WriteLine ("GetForbidden is not implemented"); }
+    async Task GetUnknownError ( ) { Console.WriteLine ("GetUnknownError is not implemented"); }
+}
