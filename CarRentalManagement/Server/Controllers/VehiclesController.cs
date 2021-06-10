@@ -8,24 +8,30 @@ using Microsoft.EntityFrameworkCore;
 using CarRentalManagement.Server.Data;
 using CarRentalManagement.Shared.Domain;
 using CarRentalManagement.Server.IRepository;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace CarRentalManagement.Server.Controllers
 {
     public class VehiclesController : BaseApiController
     {
         private readonly IUnitOfWork unitOfWork;
+        private readonly IWebHostEnvironment webHostEnvironment;
+        private readonly IHttpContextAccessor httpContextAccessor;
 
-        public VehiclesController (IUnitOfWork unitOfWork)
+        public VehiclesController (IUnitOfWork unitOfWork,IWebHostEnvironment webHostEnvironment,IHttpContextAccessor httpContextAccessor)
         {
             this.unitOfWork = unitOfWork;
+            this.webHostEnvironment = webHostEnvironment;
+            this.httpContextAccessor = httpContextAccessor;
         }
 
         // GET: Vehicles
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Vehicle>>> GetVehicles ( )
         {
-            var includes = new List<string> { "Make" , "Model" , "Colour"};
-            var Vehicles = await unitOfWork.Vehicles.GetAll (includes:includes);
+            var includes = new List<string> { "Make" , "Model" , "Colour" };
+            var Vehicles = await unitOfWork.Vehicles.GetAll (includes: includes);
             return Ok (Vehicles);
         }
 
@@ -33,8 +39,8 @@ namespace CarRentalManagement.Server.Controllers
         [HttpGet ("{id}")]
         public async Task<ActionResult<Vehicle>> GetVehicle (int id)
         {
-            var includes = new List<string> { "Make" , "Model" , "Colour" ,"Bookings"};
-            var Vehicle = await unitOfWork.Vehicles.Get (m => m.Id == id, includes: includes);
+            var includes = new List<string> { "Make" , "Model" , "Colour" , "Bookings" };
+            var Vehicle = await unitOfWork.Vehicles.Get (m => m.Id == id , includes: includes);
 
             if (Vehicle is null) return NotFound ();
 
@@ -49,6 +55,11 @@ namespace CarRentalManagement.Server.Controllers
             if (id != Vehicle.Id)
             {
                 return BadRequest ();
+            }
+
+            if(Vehicle.Image.Length > 0)
+            {
+                Vehicle.ImageName = await CreateFile(Vehicle.Image , Vehicle.ImageName) ?? string.Empty;
             }
 
             unitOfWork.Vehicles.Update (Vehicle);
@@ -77,6 +88,8 @@ namespace CarRentalManagement.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<Vehicle>> PostVehicle (Vehicle Vehicle)
         {
+            Vehicle.ImageName = await CreateFile(Vehicle.Image , Vehicle.ImageName);
+
             await unitOfWork.Vehicles.Insert (Vehicle);
             await unitOfWork.Save (HttpContext);
 
@@ -92,10 +105,28 @@ namespace CarRentalManagement.Server.Controllers
             {
                 return NotFound ();
             }
-            await unitOfWork.Vehicles.Delete(id);
-            await unitOfWork.Save(HttpContext);
+            await unitOfWork.Vehicles.Delete (id);
+            await unitOfWork.Save (HttpContext);
 
             return NoContent ();
+        }
+
+        private async Task<string> CreateFile(byte[] image , string name)
+        {
+            if (image.Length > 0)
+            {
+                var url = httpContextAccessor.HttpContext.Request.Host.Value;
+                var path = Path.Combine (webHostEnvironment.WebRootPath , "Uploads" , "Images");
+                
+                if(!Directory.Exists(path)) Directory.CreateDirectory(path);
+                
+                path = Path.Combine(path  , name);
+                var fstream = System.IO.File.Create (path);
+                await fstream.WriteAsync (image , 0 , image.Length);
+                fstream.Close ();
+                name = $"https://{url}/Uploads/Images/{name}";
+            }
+            return name;
         }
 
         private async Task<bool> VehicleExists (int id)

@@ -1,8 +1,10 @@
-﻿using CarRentalManagement.Client.Static;
+﻿using CarRentalManagement.Client.Interfaces;
+using CarRentalManagement.Client.Static;
 using CarRentalManagement.Shared.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -13,18 +15,27 @@ using System.Threading.Tasks;
 namespace CarRentalManagement.Client.Pages.Models
 {
     [Authorize]
-    public partial class Index
+    public partial class Index : IDisposable
     {
-        [Inject]
-        HttpClient client { get; set; }
-        [Inject]
-        IJSRuntime js { get; set; }
+        [Inject] IHttpRepository<Model> client { get; set; }
+        [Inject] IJSRuntime js { get; set; }
 
-        private List<Model> Models;
+        private IList<Model> Models;
 
         protected override async Task OnInitializedAsync ( )
-{
-            Models = await client.GetFromJsonAsync<List<Model>> (Endpoints.ModelsEndpoint);
+        {
+            Models = await client.GetAll (Endpoints.ModelsEndpoint);
+        }
+
+        protected override async Task OnAfterRenderAsync (bool firstRender)
+        {
+            await js.InvokeVoidAsync ("addDataTable" , "#modelsTable");
+
+        }
+
+        public void Dispose ( )
+        {
+            js.InvokeVoidAsync ("dataTablesDispose" , "#modelsTable");
         }
 
         async Task Delete (int modelId)
@@ -34,9 +45,9 @@ namespace CarRentalManagement.Client.Pages.Models
 
             if (confirm)
             {
-                await client.DeleteAsync ($"{Endpoints.ModelsEndpoint}/{model.Id}");
+                await client.Delete (Endpoints.ModelsEndpoint , model.Id);
                 Models.Remove (model);
-                StateHasChanged();
+                StateHasChanged ();
             }
 
         }

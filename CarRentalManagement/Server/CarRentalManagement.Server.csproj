@@ -6,30 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="wwwroot_server\css\site.css" />
-    <Content Include="wwwroot_server\favicon.ico" />
-    <Content Include="wwwroot_server\js\site.js" />
-    <Content Include="wwwroot_server\lib\bootstrap\dist\css\bootstrap.css" />
-    <Content Include="wwwroot_server\lib\bootstrap\dist\css\bootstrap.css.map" />
-    <Content Include="wwwroot_server\lib\bootstrap\dist\css\bootstrap.min.css" />
-    <Content Include="wwwroot_server\lib\bootstrap\dist\css\bootstrap.min.css.map" />
-    <Content Include="wwwroot_server\lib\bootstrap\dist\js\bootstrap.js" />
-    <Content Include="wwwroot_server\lib\bootstrap\dist\js\bootstrap.min.js" />
-    <Content Include="wwwroot_server\lib\bootstrap\LICENSE" />
-    <Content Include="wwwroot_server\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js" />
-    <Content Include="wwwroot_server\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js" />
-    <Content Include="wwwroot_server\lib\jquery-validation\dist\additional-methods.js" />
-    <Content Include="wwwroot_server\lib\jquery-validation\dist\additional-methods.min.js" />
-    <Content Include="wwwroot_server\lib\jquery-validation\dist\jquery.validate.js" />
-    <Content Include="wwwroot_server\lib\jquery-validation\dist\jquery.validate.min.js" />
-    <Content Include="wwwroot_server\lib\jquery-validation\LICENSE.md" />
-    <Content Include="wwwroot_server\lib\jquery\dist\jquery.js" />
-    <Content Include="wwwroot_server\lib\jquery\dist\jquery.min.js" />
-    <Content Include="wwwroot_server\lib\jquery\dist\jquery.min.map" />
-    <Content Include="wwwroot_server\lib\jquery\LICENSE.txt" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="bootstrap" Version="5.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.6" />
@@ -48,6 +24,24 @@
     <PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="5.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="C:\Users\MMN\.nuget\packages\bootstrap\5.0.1\contentFiles\any\any\wwwroot\css\bootstrap-grid.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="C:\Users\MMN\.nuget\packages\bootstrap\5.0.1\contentFiles\any\any\wwwroot\css\bootstrap-reboot.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="C:\Users\MMN\.nuget\packages\bootstrap\5.0.1\contentFiles\any\any\wwwroot\css\bootstrap-utilities.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="C:\Users\MMN\.nuget\packages\bootstrap\5.0.1\contentFiles\any\any\wwwroot\css\bootstrap.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="C:\Users\MMN\.nuget\packages\bootstrap\5.0.1\contentFiles\any\any\wwwroot\js\bootstrap.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

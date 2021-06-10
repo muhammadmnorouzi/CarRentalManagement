@@ -10,6 +10,13 @@
         <div class="form-group">
             <label>Makes: </label>
             <div>
+                <InputFile OnChange="HandleFileSelection"  />
+                <p class="table-danger">@UploadFileWarning</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Makes: </label>
+            <div>
                 <select @bind="Vehicle.MakeId" class="form-control">
                     <option value="">-- Select Make --</option>
                     @if (Makes is not null)

@@ -21,7 +21,7 @@ namespace CarRentalManagement.Server
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                    webBuilder.UseWebRoot("wwwroot_server");
+                    webBuilder.UseWebRoot("wwwroot");
                 });
     }
 }

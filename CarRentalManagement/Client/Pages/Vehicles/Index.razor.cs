@@ -1,8 +1,10 @@
-﻿using CarRentalManagement.Client.Static;
+﻿using CarRentalManagement.Client.Interfaces;
+using CarRentalManagement.Client.Static;
 using CarRentalManagement.Shared.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -13,18 +15,27 @@ using System.Threading.Tasks;
 namespace CarRentalManagement.Client.Pages.Vehicles
 {
     [Authorize]
-    public partial class Index
+    public partial class Index : IDisposable
     {
-        [Inject]
-        HttpClient client { get; set; }
-        [Inject]
-        IJSRuntime js { get; set; }
+        [Inject] IHttpRepository<Vehicle> client { get; set; }
+        [Inject] IJSRuntime js { get; set; }
 
-        private List<Vehicle> Vehicles;
+        private IList<Vehicle> Vehicles;
 
         protected override async Task OnInitializedAsync ( )
-{
-            Vehicles = await client.GetFromJsonAsync<List<Vehicle>> (Endpoints.VehiclesEndpoint);
+        {
+            Vehicles = await client.GetAll (Endpoints.VehiclesEndpoint);
+        }
+
+        protected override async Task OnAfterRenderAsync (bool firstRender)
+        {
+            await js.InvokeVoidAsync ("addDataTable" , "#vehicleTable");
+
+        }
+
+        public void Dispose ( )
+        {
+            js.InvokeVoidAsync ("dataTablesDispose" , "#vehicleTable");
         }
 
         async Task Delete (int VehicleId)
@@ -34,11 +45,13 @@ namespace CarRentalManagement.Client.Pages.Vehicles
 
             if (confirm)
             {
-                await client.DeleteAsync ($"{Endpoints.VehiclesEndpoint}/{Vehicle.Id}");
+                await client.Delete (Endpoints.VehiclesEndpoint ,Vehicle.Id);
                 Vehicles.Remove (Vehicle);
-                StateHasChanged();
+                StateHasChanged ();
             }
 
         }
+
+
     }
 }

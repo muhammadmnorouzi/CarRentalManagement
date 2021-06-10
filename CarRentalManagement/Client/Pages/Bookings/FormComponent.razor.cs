@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using System.Security.Principal;
 using System.Threading.Tasks;
+using CarRentalManagement.Client.Interfaces;
 using CarRentalManagement.Client.Static;
 using CarRentalManagement.Shared.Domain;
 using Microsoft.AspNetCore.Components;
@@ -13,7 +14,8 @@ namespace CarRentalManagement.Client.Pages.Bookings
 {
     public partial class FormComponent
     {
-        [Inject] HttpClient client { get; set; }
+        [Inject] IHttpRepository<Vehicle> vehiclesRepository { get; set; }
+        [Inject] IHttpRepository<Customer> customersRepository { get; set; }
 
         [Parameter] public Booking Booking { get; set; }
         [Parameter] public string ButtonText { get; set; }
@@ -28,8 +30,8 @@ namespace CarRentalManagement.Client.Pages.Bookings
 
         protected override async Task OnInitializedAsync ( )
         {
-            Vehicles = await client.GetFromJsonAsync<List<Vehicle>> (Endpoints.VehiclesEndpoint);
-            Customers = await client.GetFromJsonAsync<List<Customer>> (Endpoints.CustomersEndpoint);
+            Vehicles = await vehiclesRepository.GetAll (Endpoints.VehiclesEndpoint);
+            Customers = await customersRepository.GetAll (Endpoints.CustomersEndpoint);
         }
     }
 }

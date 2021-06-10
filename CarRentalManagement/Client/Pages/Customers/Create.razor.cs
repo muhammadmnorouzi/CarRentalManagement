@@ -6,16 +6,15 @@ using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Authorization;
+using CarRentalManagement.Client.Interfaces;
 
 namespace CarRentalManagement.Client.Pages.Customers
 {
     [Authorize]
     public partial class Create
     {
-        [Inject]
-        HttpClient client { get; set; }
-        [Inject] 
-        NavigationManager navigationManager { get; set; }
+        [Inject] IHttpRepository<Customer> client { get; set; }
+        [Inject] NavigationManager navigationManager { get; set; }
 
         Customer customer= new ();
 
@@ -26,7 +25,7 @@ namespace CarRentalManagement.Client.Pages.Customers
 
         private async Task CreateCustomer ( )
         {
-            await client.PostAsJsonAsync (Endpoints.CustomersEndpoint , customer);
+            await client.Create (Endpoints.CustomersEndpoint , customer);
             navigationManager.NavigateTo ("/customers/");
         }
     }

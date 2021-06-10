@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace CarRentalManagement.Client.IServices
+namespace CarRentalManagement.Client.Interfaces
 {
     public interface IHttpInterceptorService
     {

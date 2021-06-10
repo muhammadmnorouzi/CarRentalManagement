@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Net;
-using System.Threading.Tasks;
-using CarRentalManagement.Client.IServices;
+using CarRentalManagement.Client.Interfaces;
 using Microsoft.AspNetCore.Components;
 using Toolbelt.Blazor;
 
@@ -23,6 +22,9 @@ namespace CarRentalManagement.Client.Services
 
         private void InterceptResponse (object sender , HttpClientInterceptorEventArgs e)
         {
+            Console.WriteLine (sender);
+            Console.WriteLine (e);
+
             if (!e.Response.IsSuccessStatusCode)
             {
                 string nextUrl = e.Response.StatusCode switch
@@ -34,8 +36,8 @@ namespace CarRentalManagement.Client.Services
                     HttpStatusCode.InternalServerError => "server-error",
                     _ => "unknown-error"
                 };
-
-                navigationManager.NavigateTo ($"/{nextUrl}");
+                throw new Exception(nextUrl);
+                //navigationManager.NavigateTo ($"/{nextUrl}");
             }
         }
     }

@@ -6,14 +6,14 @@ using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Authorization;
+using CarRentalManagement.Client.Interfaces;
 
 namespace CarRentalManagement.Client.Pages.Models
 {
     [Authorize]
     public partial class Create
     {
-        [Inject]
-        HttpClient client { get; set; }
+        [Inject] IHttpRepository<Model> client { get; set; }
         [Inject] 
         NavigationManager navigationManager { get; set; }
 
@@ -26,7 +26,7 @@ namespace CarRentalManagement.Client.Pages.Models
 
         private async Task CreateModel ( )
         {
-            await client.PostAsJsonAsync (Endpoints.ModelsEndpoint , model);
+            await client.Create (Endpoints.ModelsEndpoint , model);
             navigationManager.NavigateTo ("/models/");
         }
     }

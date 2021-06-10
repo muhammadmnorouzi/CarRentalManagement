@@ -1,4 +1,5 @@
-﻿using CarRentalManagement.Client.Static;
+﻿using CarRentalManagement.Client.Interfaces;
+using CarRentalManagement.Client.Static;
 using CarRentalManagement.Shared.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
@@ -13,18 +14,27 @@ using System.Threading.Tasks;
 namespace CarRentalManagement.Client.Pages.Colours
 {
     [Authorize]
-    public partial class Index
+    public partial class Index : IDisposable
     {
-        [Inject]
-        HttpClient client { get; set; }
-        [Inject]
-        IJSRuntime js { get; set; }
+        [Inject] IHttpRepository<Colour> client { get; set; }
+        [Inject] IJSRuntime js { get; set; }
 
-        private List<Colour> Colours;
+        private IList<Colour> Colours;
 
         protected override async Task OnInitializedAsync ( )
         {
-            Colours = await client.GetFromJsonAsync<List<Colour>> (Endpoints.ColoursEndpoint);
+            Colours = await client.GetAll (Endpoints.ColoursEndpoint);
+        }
+
+        protected override async Task OnAfterRenderAsync (bool firstRender)
+        {
+            await js.InvokeVoidAsync ("addDataTable" , "#coloursTable");
+
+        }
+
+        public void Dispose ( )
+        {
+            js.InvokeVoidAsync ("dataTablesDispose" , "#coloursTable");
         }
 
         async Task Delete (int colourId)
@@ -34,9 +44,9 @@ namespace CarRentalManagement.Client.Pages.Colours
 
             if (confirm)
             {
-                await client.DeleteAsync ($"{Endpoints.ColoursEndpoint}/{colour.Id}");
+                await client.Delete (Endpoints.ColoursEndpoint , colour.Id);
                 Colours.Remove (colour);
-                StateHasChanged();
+                StateHasChanged ();
             }
 
         }

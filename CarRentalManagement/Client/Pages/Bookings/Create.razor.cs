@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Authorization;
 using System;
+using CarRentalManagement.Client.Interfaces;
 
 namespace CarRentalManagement.Client.Pages.Bookings
 {
     [Authorize]
     public partial class Create
     {
-        [Inject] HttpClient client { get; set; }
+        [Inject] IHttpRepository<Booking> client { get; set; }
         [Inject] NavigationManager navigationManager { get; set; }
 
         Booking booking= new(){ DateOut = DateTime.Now.Date };
@@ -21,7 +22,7 @@ namespace CarRentalManagement.Client.Pages.Bookings
 
         private async Task CreateBooking ( )
         {
-            await client.PostAsJsonAsync (Endpoints.BookingsEndpoint , booking);
+            await client.Create (Endpoints.BookingsEndpoint , booking);
             navigationManager.NavigateTo ("/bookings/");
         }
     }

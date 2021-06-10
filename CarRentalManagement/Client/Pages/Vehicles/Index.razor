@@ -17,9 +17,10 @@
 else
 {
     <div class="table-responsive">
-        <table class="table">
+        <table class="table" id="vehicleTable">
             <thead>
                 <tr>
+                    <th>Image</th>
                     <th>Make</th>
                     <th>Model</th>
                     <th>Year</th>
@@ -31,11 +32,12 @@ else
                 @foreach (var vehicle in Vehicles)
                 {
                     <tr>
-                        <th>@vehicle.Make?.Name</th>
-                        <th>@vehicle.Model?.Name</th>
-                        <th>@vehicle.Year</th>
-                        <th>@vehicle.RentalRate</th>
-                        <th>
+                        <td><img src="@vehicle.ImageName" style="height:100px;" alt="Nothing Found"/></td>
+                        <td>@vehicle.Make?.Name</td>
+                        <td>@vehicle.Model?.Name</td>
+                        <td>@vehicle.Year</td>
+                        <td>@vehicle.RentalRate</td>
+                        <td>
                             <a href="/vehicles/view/@vehicle.Id" class="btn btn-primary">
                                 <span class="oi oi-book"></span>
                             </a>
@@ -45,7 +47,7 @@ else
                             <button class="btn btn-danger" @onclick="@(async ()=>await Delete(vehicle.Id))">
                                 <span class="oi oi-book"></span>
                             </button>
-                        </th>
+                        </td>
                     </tr>
                 }
             </tbody>

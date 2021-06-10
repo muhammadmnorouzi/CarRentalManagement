@@ -1,24 +1,16 @@
 ﻿using System;
 using System.Threading.Tasks;
-using CarRentalManagement.Client.IServices;
+using CarRentalManagement.Client.Interfaces;
 using Microsoft.AspNetCore.Components;
 
 namespace CarRentalManagement.Client.Shared
 {
 
-    public partial class MainLayout : IDisposable
+    public partial class MainLayout
     {
-        [Inject] IHttpInterceptorService httpInterceptor { get; set; }
-
         protected override async Task OnInitializedAsync ( )
         {
-            httpInterceptor.MonitorEvent();
             await base.OnInitializedAsync();
-        }
-
-        public void Dispose ( )
-        {
-            httpInterceptor.DisposeEvent();
         }
     }
 }

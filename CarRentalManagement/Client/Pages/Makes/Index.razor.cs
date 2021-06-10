@@ -1,4 +1,5 @@
-﻿using CarRentalManagement.Client.Static;
+﻿using CarRentalManagement.Client.Interfaces;
+using CarRentalManagement.Client.Static;
 using CarRentalManagement.Shared.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
@@ -13,18 +14,27 @@ using System.Threading.Tasks;
 namespace CarRentalManagement.Client.Pages.Makes
 {
     [Authorize]
-    public partial class Index
+    public partial class Index:IDisposable
     {
-        [Inject]
-        HttpClient client { get; set; }
-        [Inject]
-        IJSRuntime js { get; set; }
+        [Inject] IHttpRepository<Make> client { get; set; }
+        [Inject] IJSRuntime js { get; set; }
 
-        private List<Make> Makes;
+        private IList<Make> Makes;
 
         protected override async Task OnInitializedAsync ( )
         {
-            Makes = await client.GetFromJsonAsync<List<Make>> (Endpoints.MakesEndpoint);
+            Makes = await client.GetAll(Endpoints.MakesEndpoint);
+        }
+
+        protected override async Task OnAfterRenderAsync (bool firstRender)
+        {
+            await js.InvokeVoidAsync ("addDataTable" , "#makesTable");
+
+        }
+
+        public void Dispose ( )
+        {
+            js.InvokeVoidAsync ("dataTablesDispose" , "#makesTable");
         }
 
         async Task Delete (int modelId)
@@ -34,7 +44,7 @@ namespace CarRentalManagement.Client.Pages.Makes
 
             if (confirm)
             {
-                await client.DeleteAsync ($"{Endpoints.MakesEndpoint}/{make.Id}");
+                await client.Delete (Endpoints.MakesEndpoint,make.Id);
                 Makes.Remove (make);
                 StateHasChanged();
             }
